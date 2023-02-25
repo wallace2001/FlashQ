@@ -21,7 +21,7 @@ interface IValuesForm {
     password: string;
 }
 
-export const Login = () => {
+export const SignIn = () => {
     const [isChecked, setChecked] = useState(false);
 
     const { control, formState: { errors } } = useForm<IValuesForm>({
