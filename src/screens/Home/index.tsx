@@ -1,11 +1,15 @@
 import { useState, useEffect, useContext } from "react";
-import { StyleSheet, View, TextInput, Platform, Pressable, Text } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, TextInput, Pressable, FlatList } from "react-native";
+import { collection } from "firebase/firestore";
+import { useCollectionData } from "react-firebase-hooks/firestore";
+import { Entypo } from '@expo/vector-icons';
+import _ from "lodash";
+
 import { FolderIcon } from "../../components/Folder";
-import { collection } from "firebase/firestore"; 
 import { db } from "../../config/firebaseConfig";
 import { IPars, MobileContext } from "../../context/context";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import _ from "lodash";
+import { homeStyles as styles } from "./styles";
+import { Header } from "../../components/Header";
 
 export const Home = () => {
 
@@ -16,7 +20,7 @@ export const Home = () => {
     // Searching folders according to where you are now
     // TODO: Study better to try to improve this database call
     const query = collection(db, path);
-    const [ docs ] = useCollectionData(query);
+    const [docs] = useCollectionData(query);
 
     const handleSubmit = () => {
         const pars: IPars = {
@@ -34,6 +38,7 @@ export const Home = () => {
 
     return (
         <View style={styles.container}>
+            <Header />
             <View style={styles.form}>
                 <TextInput
                     value={description}
@@ -47,57 +52,6 @@ export const Home = () => {
                     <Text style={styles.icon}>＋</Text>
                 </Pressable>
             </View>
-            <View style={styles.content}>
-                {_.map(folders, folder => {
-                    return (
-                        <FolderIcon key={folder.id} {...folder} />
-                    );
-                })}
-            </View>
-
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        width: '100%',
-        height: '100%',
-
-    },
-    content: {
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexDirection: "row",
-        paddingVertical: 20,
-        paddingHorizontal: 5,
-        flexWrap: "wrap"
-    },
-    form: {
-        height: 50,
-        marginBottom: 20,
-        flexDirection: 'row',
-    },
-    textInput: {
-        flex: 1,
-        paddingHorizontal: 15,
-        paddingVertical: Platform.OS === 'ios' ? 15 : 0,
-        borderRadius: 5,
-        backgroundColor: "#fff",
-        fontSize: 17,
-    },
-    submit: {
-        width: 50,
-        height: '100%',
-        paddingHorizontal: 0,
-        paddingVertical: 0,
-        marginLeft: 20,
-        marginRight: 0,
-    },
-    icon: {
-        color: "#fff",
-        textAlign: 'center',
-        fontSize: 17,
-        fontWeight: 'bold',
-    },
-});
