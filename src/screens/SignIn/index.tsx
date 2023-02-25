@@ -15,6 +15,7 @@ import { Entypo } from '@expo/vector-icons'
 // Styles CSS
 import { styles } from './styles';
 import { COLORS, FONTS } from "../../../constants/theme";
+import { useNavigation } from "@react-navigation/native";
 
 interface IValuesForm {
     email: string;
@@ -23,6 +24,8 @@ interface IValuesForm {
 
 export const SignIn = () => {
     const [isChecked, setChecked] = useState(false);
+
+    const navigation: any = useNavigation();
 
     const { control, formState: { errors } } = useForm<IValuesForm>({
         defaultValues: {
@@ -98,8 +101,13 @@ export const SignIn = () => {
                 </View>
             </View>
 
-            <View>
-                <Text style={styles.text}>Dont have an account ? <Text style={{ color: COLORS.pink_500 }}>Create new one</Text></Text>
+            <View style={styles.footer}>
+                <Text style={styles.text}>
+                    Dont have an account ?
+                </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
+                    <Text style={{ color: COLORS.pink_500 }}> Create new one</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

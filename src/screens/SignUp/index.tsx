@@ -11,6 +11,7 @@ import Checkbox from 'expo-checkbox';
 // Styles CSS
 import { styles } from './styles';
 import { COLORS, FONTS } from "../../../constants/theme";
+import { useNavigation } from "@react-navigation/native";
 
 interface IValuesForm {
     email: string;
@@ -21,6 +22,8 @@ interface IValuesForm {
 
 export const SignUp = () => {
     const [isChecked, setChecked] = useState(false);
+
+    const navigation: any = useNavigation();
 
     const { control, formState: { errors } } = useForm<IValuesForm>({
         defaultValues: {
@@ -125,8 +128,13 @@ export const SignUp = () => {
                 </View>
             </View>
 
-            <View>
-                <Text style={[styles.text, {textAlign: 'center'}]}>Dont have ana account ? <Text style={styles.strongText}>Create new one</Text></Text>
+            <View style={styles.footer}>
+                <Text style={[styles.text, { textAlign: 'center' }]}>
+                    Already have an account ?
+                </Text>
+                <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+                    <Text style={{ color: COLORS.pink_500 }}> Sign in</Text>
+                </TouchableOpacity>
             </View>
         </View>
     );

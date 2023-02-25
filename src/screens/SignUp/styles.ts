@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         height: '100%',
         padding: 20,
         justifyContent: 'space-between',
-        marginHorizontal: 20,
+        backgroundColor: COLORS.blue_background,
     },
     headerContent: {
         maxHeight: 140,
@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
         borderRadius: 20,
         backgroundColor: COLORS.blue_input,
         paddingHorizontal: 15,
-        color: '#fff'
+        color: COLORS.white
     },
     contentForgot: {
         flexDirection: 'row',
@@ -56,7 +56,7 @@ export const styles = StyleSheet.create({
     },
     textButton: {
         fontSize: 20,
-        color: COLORS.White,
+        color: COLORS.white,
         fontFamily: 'Ubuntu_400Regular'
     },
     divider: {
@@ -81,5 +81,10 @@ export const styles = StyleSheet.create({
     strongText: {
         color: COLORS.pink_500,
         fontFamily: 'Ubuntu_400Regular'
+    },
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });

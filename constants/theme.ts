@@ -3,14 +3,14 @@ const COLORS = {
     blue_100: '#454A72',
     blue_input: '#242846',
     blue_background: '#202442',
-    White: '#fff'
+    white: '#fff'
 };
 
 const FONTS = {
     h1: {
         fontFamily: 'Ubuntu_700Bold',
         fontSize: 35,
-        color: COLORS.White,
+        color: COLORS.white,
     },
     text: {
         color: COLORS.blue_100,

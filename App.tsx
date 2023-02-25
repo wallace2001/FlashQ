@@ -7,6 +7,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { SignUp } from "./src/screens/SignUp";
 import { Ubuntu_400Regular, Ubuntu_500Medium, Ubuntu_700Bold } from "@expo-google-fonts/ubuntu";
 import { COLORS } from "./constants/theme";
+import { Router } from "./src/routes";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -32,7 +33,7 @@ export default function App() {
     <MobileProivder>
       <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
         <StatusBar style="light" />
-        <SignUp />
+        <Router />
       </SafeAreaView>
     </MobileProivder>
   );
@@ -42,7 +43,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: COLORS.blue_background,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });

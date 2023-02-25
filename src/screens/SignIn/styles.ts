@@ -7,11 +7,11 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         padding: 20,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor: COLORS.blue_background,
     },
     headerContent: {
         maxHeight: 140,
-        marginHorizontal: 20,
         marginTop: 40,
     },
     input: {
@@ -50,7 +50,7 @@ export const styles = StyleSheet.create({
     },
     textButton: {
         fontSize: 20,
-        color: COLORS.White
+        color: COLORS.white
     },
     divider: {
         marginTop: 50,
@@ -70,5 +70,10 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
+    },
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });
