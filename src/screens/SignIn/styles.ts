@@ -7,19 +7,27 @@ export const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         padding: 20,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        backgroundColor: COLORS.blue_background,
     },
     headerContent: {
         maxHeight: 140,
-        marginHorizontal: 20,
         marginTop: 40,
     },
     input: {
         paddingVertical: 15,
         marginTop: 40,
         borderRadius: 20,
-        backgroundColor: COLORS.blue_input,
+        backgroundColor: COLORS.white,
         paddingHorizontal: 15,
+        shadowColor: '#828282',
+        shadowOffset: {
+            width: 0,
+            height: 10,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5,
     },
     contentForgot: {
         flexDirection: 'row',
@@ -50,7 +58,7 @@ export const styles = StyleSheet.create({
     },
     textButton: {
         fontSize: 20,
-        color: COLORS.White
+        color: COLORS.white
     },
     divider: {
         marginTop: 50,
@@ -70,5 +78,10 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
         alignItems: 'center',
+    },
+    footer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
 });

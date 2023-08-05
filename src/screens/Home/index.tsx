@@ -1,56 +1,78 @@
 import { useState, useEffect, useContext } from "react";
-import { View, Text, ScrollView, TouchableOpacity, TextInput, Pressable, FlatList } from "react-native";
-import { collection } from "firebase/firestore";
-import { useCollectionData } from "react-firebase-hooks/firestore";
-import { Entypo } from '@expo/vector-icons';
+import { View, FlatList, ActivityIndicator } from "react-native";
 import _ from "lodash";
 
-import { FolderIcon } from "../../components/Folder";
-import { db } from "../../config/firebaseConfig";
-import { IPars, MobileContext } from "../../context/context";
+import { IFolder, MobileContext } from "../../context/context";
 import { homeStyles as styles } from "./styles";
 import { Header } from "../../components/Header";
+import { OPTIONS_BREED } from "../../../constants/home";
+import { BoxSelect } from "../../components/box-select";
+import { BoxFolder } from "../../components/box-folder";
+import { useNavigation } from "@react-navigation/native";
+import { getFolders } from "../../actions/folder";
 
 export const Home = () => {
+    const [itemSelected, setitemSelected] = useState<string>("archives");
 
-    const [description, setDescription] = useState('');
+    const { changeFolders, selectFolder, folders, path } = useContext(MobileContext);
+    const navigation = useNavigation();
 
-    const { createFolder, changeFolders, folders, path } = useContext(MobileContext);
+    const { docs, loading } = getFolders(path);
 
-    // Searching folders according to where you are now
-    // TODO: Study better to try to improve this database call
-    const query = collection(db, path);
-    const [docs] = useCollectionData(query);
-
-    const handleSubmit = () => {
-        const pars: IPars = {
-            text: description,
-            type: 'folder',
-            path: ''
-        };
-
-        createFolder(pars);
+    const onSelectFolder = (folder: IFolder) => {
+        selectFolder(folder);
+        navigation.navigate('Folder');
     };
 
     useEffect(() => {
         changeFolders(docs);
-    }, [docs])
+    }, [docs]);
 
     return (
         <View style={styles.container}>
             <Header />
-            <View style={styles.form}>
-                <TextInput
-                    value={description}
-                    placeholder="Enter new task description"
-                    onChangeText={setDescription}
-                    autoCorrect={false}
-                    autoCapitalize="none"
-                    style={styles.textInput}
+            <View style={styles.containerContent}>
+                <FlatList
+                    data={OPTIONS_BREED}
+                    renderItem={({ item, index }) => (
+                        <BoxSelect
+                            setitemSelected={setitemSelected}
+                            itemSelected={itemSelected}
+                            item={item}
+                            lastItem={OPTIONS_BREED.length - 1 === index}
+                        />
+                    )}
+                    style={styles.optionsFlatList}
+                    showsHorizontalScrollIndicator={false}
+                    horizontal
                 />
-                <Pressable onPress={handleSubmit} style={styles.submit}>
-                    <Text style={styles.icon}>＋</Text>
-                </Pressable>
+                <View style={styles.content}>
+                    {loading ? (
+                        <View style={{
+                            width: '100%',
+                            height: '100%',
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <ActivityIndicator size="large" />
+                        </View>
+                    ) : (
+                        <FlatList
+                        data={folders}
+                        renderItem={({ item }) => (
+                            <View style={styles.item}>
+                                <BoxFolder
+                                    onSelectFolder={(folder: IFolder) => onSelectFolder(folder)}
+                                    folder={item}
+                                    quantityArchives={2}
+                                    key={item.text}
+                                />
+                            </View>
+                        )}
+                        showsVerticalScrollIndicator={false}
+                    />
+                    )}
+                </View>
             </View>
         </View>
     );

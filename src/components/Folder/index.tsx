@@ -1,37 +1,46 @@
 import { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { Entypo } from '@expo/vector-icons'; 
+import { Entypo } from '@expo/vector-icons';
 import { IFolder, MobileContext } from "../../context/context";
 
-export const FolderIcon = (folder: IFolder) => {
+export const FolderIcon = ({ folder }: { folder: IFolder }) => {
 
     const { selectFolder } = useContext(MobileContext);
 
     return (
         <TouchableOpacity onPress={() => selectFolder(folder)} style={styles.container}>
-            <View style={styles.folder}>
-                <Entypo name="folder" size={60} color="white" />
-            </View>
+        <View style={styles.folder}>
+            <Entypo name="folder" size={40} color="black" />
+        </View>
+        <View style={styles.contentName}>
             <Text style={styles.text}>{folder.text}</Text>
-        </TouchableOpacity>
+        </View>
+        <View style={{ flex: 1 }} />
+    </TouchableOpacity>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        alignItems: 'center',
-        paddingHorizontal: 3.5,
-        // backgroundColor: 'green'
+        width: '100%',
+        borderRadius: 5,
+        justifyContent: 'center',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
     },
     folder: {
-        width: 70,
-        height: 70,
-        borderRadius: 10,
+        flex: 1,
+        height: 60,
         justifyContent: 'center',
-        alignItems: 'center',
+        borderRadius: 10,
+    },
+    contentName: {
+        height: '100%',
+        justifyContent: 'flex-end',
     },
     text: {
-        marginTop: 8,
-        color: '#fff'
+        textAlign: 'center',
+        color: '#000'
     },
+
 });

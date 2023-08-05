@@ -4,18 +4,29 @@ import { SafeAreaView, StyleSheet } from 'react-native';
 import { MobileProivder } from './src/context/context';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
-import { SignUp } from "./src/screens/SignUp";
+import useColorScheme from './src/hooks/use-color-scheme';
 import { Ubuntu_400Regular, Ubuntu_500Medium, Ubuntu_700Bold } from "@expo-google-fonts/ubuntu";
-import { COLORS } from "./constants/theme";
+import {
+  Poppins_500Medium,
+  Poppins_300Light,
+  Poppins_700Bold_Italic,
+  Poppins_700Bold,
+} from "@expo-google-fonts/poppins";
+import { Router } from "./src/routes";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-
+  const colorScheme = useColorScheme();
   const [fontsLoaded] = useFonts({
     Ubuntu_400Regular,
-    Ubuntu_500Medium, 
-    Ubuntu_700Bold
+    Ubuntu_500Medium,
+    Ubuntu_700Bold,
+    Poppins_500Medium,
+    Poppins_300Light,
+    Poppins_700Bold_Italic,
+    Poppins_700Bold,
   });
 
   const onLayoutRootView = useCallback(async () => {
@@ -29,20 +40,20 @@ export default function App() {
   }
 
   return (
-    <MobileProivder>
-      <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-        <StatusBar style="light" />
-        <SignUp />
-      </SafeAreaView>
-    </MobileProivder>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+        <MobileProivder>
+          <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
+            <StatusBar style="dark" />
+            <Router colorScheme={colorScheme}/>
+          </SafeAreaView>
+        </MobileProivder>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.blue_background,
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#EAE8FE',
   },
 });
