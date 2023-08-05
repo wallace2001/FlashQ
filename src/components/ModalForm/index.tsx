@@ -4,7 +4,7 @@ import Modal from "react-native-modal";
 import useAddFolderModal from "../../hooks/use-add-modal";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { dinamicStyledButton, styles } from "./styles";
-import { FormFolder } from "../Form/form-folder";
+import { FormFolder, FormCard } from "../Form";
 import { IPars, MobileContext } from "../../context/context";
 import { createFolder } from "../../actions/folder";
 
@@ -26,6 +26,7 @@ export const ModalAddArchive = () => {
             onBackdropPress={onClose}
             style={styles.contentView}
             avoidKeyboard
+            propagateSwipe={true}
         >
             <View style={styles.content}>
                 <View style={styles.contentButtons}>
@@ -45,7 +46,7 @@ export const ModalAddArchive = () => {
                         onSubmit={(pars: IPars) => handleSubmit(pars)}
                     />
                 ) : (
-                    <Text>Lets go create a {type}</Text>
+                    <FormCard />
                 )}
 
             </View>

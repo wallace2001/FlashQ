@@ -1,20 +1,24 @@
 import { useState, useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
 import { IFolder, MobileContext } from "../context/context";
 import { COLORS } from "../../constants/theme";
 import { deleteFolder } from "../actions/folder";
 import useEditFolderModal from "../hooks/use-edit-folder-modal";
+import useViewFileModal from "../hooks/use-view-file-modal";
+import { IArchive } from "../types";
+
+const TYPE_FOLDER = 'folder';
 
 interface BoxFoldersProps {
-  folder: IFolder;
+  archive: IArchive;
   quantityArchives: number;
-  onSelectFolder(folder: IFolder): void;
+  onSelectFolder(archive: IArchive): void;
 }
 
-export const BoxFolder = ({ 
-  folder, 
+export const BoxFolder = ({
+  archive,
   quantityArchives,
   onSelectFolder
 }: BoxFoldersProps) => {
@@ -22,8 +26,40 @@ export const BoxFolder = ({
   const { path } = useContext(MobileContext);
 
   const [swipeActivated, setSwipeActivated] = useState(false);
-  const {onOpen: onOpenEditFolder} = useEditFolderModal();
-  const { text: name } = folder;
+  const { onOpen: onOpenEditFolder } = useEditFolderModal();
+  const { onOpen: onOpenViewFile } = useViewFileModal();
+  const { text: name } = archive;
+
+  const isFolder = archive.type === TYPE_FOLDER;
+
+  const renderFolder = (
+    <>
+      <View style={styles.backgroundImage}>
+        <Entypo name="folder" size={30} color="#ffe713" />
+      </View>
+      <View style={styles.info}>
+        <View style={styles.headerInfo}>
+          <Text style={styles.nameText}>{name}</Text>
+        </View>
+        <View style={styles.contentInfo}>
+          <Text style={styles.quantityArchives}>{quantityArchives} de arquivos</Text>
+        </View>
+      </View>
+    </>
+  );
+
+  const renderFile = (
+    <>
+      <View style={styles.backgroundImage}>
+        <AntDesign name="file1" size={30} color="#063aca" />
+      </View>
+      <View style={styles.info}>
+        <View style={{justifyContent: 'center', alignItems: 'flex-start', height: '100%'}}>
+          <Text style={styles.nameText}>{name}</Text>
+        </View>
+      </View>
+    </>
+  );
 
   return (
     <Swipeable
@@ -34,14 +70,18 @@ export const BoxFolder = ({
         <View style={styles.contentAction}>
           <View style={styles.edit}>
             <TouchableOpacity
-              onPress={() => onOpenEditFolder(folder)}
+              onPress={() => {
+                if (isFolder) {
+                  onOpenEditFolder(archive)
+                }
+              }}
             >
               <FontAwesome5 name="edit" size={20} color={COLORS.white} />
             </TouchableOpacity>
           </View>
           <View style={styles.remove}>
             <TouchableOpacity
-              onPress={() => deleteFolder(folder.id, path)}
+              onPress={() => deleteFolder(archive.id, path)}
             >
               <FontAwesome5 name="trash" size={20} color={COLORS.white} />
             </TouchableOpacity>
@@ -51,23 +91,17 @@ export const BoxFolder = ({
     >
       <TouchableOpacity
         onPress={() => {
-          if (!swipeActivated) {
-            onSelectFolder(folder);
+          if (!swipeActivated && isFolder) {
+            onSelectFolder(archive);
+          }
+
+          if (!swipeActivated && !isFolder) {
+            onOpenViewFile(archive);
           }
         }}
         style={styles.container}
       >
-        <View style={styles.backgroundImage}>
-          <Entypo name="folder" size={40} color="#ffe713" />
-        </View>
-        <View style={styles.info}>
-          <View style={styles.headerInfo}>
-            <Text style={styles.nameText}>{name}</Text>
-          </View>
-          <View style={styles.contentInfo}>
-            <Text style={styles.quantityArchives}>{quantityArchives} de arquivos</Text>
-          </View>
-        </View>
+        {isFolder ? renderFolder : renderFile}
       </TouchableOpacity>
     </Swipeable>
 

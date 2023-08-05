@@ -9,18 +9,19 @@ import _ from "lodash";
 import { styles } from "./styles";
 import { getFolders } from "../../actions/folder";
 import { EmptyFolder } from "../../components/empty-folder";
+import { IArchive } from "../../types";
 
 export const Folder = () => {
     const [stringPath, setStringPath] = useState<string>('');
 
-    const { folders, selectFolder, changeFolders, setPath, path } = useContext(MobileContext);
+    const { archives, selectFolder, changeFolders, setPath, path } = useContext(MobileContext);
 
     const navigation = useNavigation();
 
     const { docs, loading } = getFolders(path);
 
-    const onSelectFolder = (folder: IFolder) => {
-        selectFolder(folder);
+    const onSelectFolder = (archive: IArchive) => {
+        selectFolder(archive);
     };
 
     const onBack = () => {
@@ -70,14 +71,14 @@ export const Folder = () => {
                         <ActivityIndicator size="large" />
                     </View>
                 ) : (
-                    _.isEmpty(folders) ? (<EmptyFolder />) : (
+                    _.isEmpty(archives) ? (<EmptyFolder />) : (
                         <FlatList
-                            data={folders}
+                            data={archives}
                             renderItem={({ item }) => (
                                 <View style={styles.item}>
                                     <BoxFolder
-                                        onSelectFolder={(folder) => onSelectFolder(folder)}
-                                        folder={item}
+                                        onSelectFolder={(archive) => onSelectFolder(archive)}
+                                        archive={item}
                                         quantityArchives={2}
                                         key={item.text}
                                     />

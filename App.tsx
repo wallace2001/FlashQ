@@ -16,6 +16,7 @@ import { Router } from "./src/routes";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ModalEditFolder } from "./src/components/modal-edit-folder";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { ModalViewFile } from "./src/components/modal-view-file";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -47,6 +48,7 @@ export default function App() {
         <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
           <StatusBar style="dark" />
           <ModalEditFolder />
+          <ModalViewFile />
           <Router colorScheme={colorScheme} />
           <Toast />
         </SafeAreaView>

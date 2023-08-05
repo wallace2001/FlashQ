@@ -1,4 +1,4 @@
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc,  } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 

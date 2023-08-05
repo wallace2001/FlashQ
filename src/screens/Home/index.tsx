@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
 import _ from "lodash";
 
-import { IFolder, MobileContext } from "../../context/context";
+import { MobileContext } from "../../context/context";
 import { homeStyles as styles } from "./styles";
 import { Header } from "../../components/Header";
 import { OPTIONS_BREED } from "../../../constants/home";
@@ -11,17 +11,18 @@ import { BoxFolder } from "../../components/box-folder";
 import { useNavigation } from "@react-navigation/native";
 import { getFolders } from "../../actions/folder";
 import { EmptyFolder } from "../../components/empty-folder";
+import { IArchive } from "../../types";
 
 export const Home = () => {
     const [itemSelected, setitemSelected] = useState<string>("archives");
 
-    const { changeFolders, selectFolder, folders, path } = useContext(MobileContext);
+    const { changeFolders, selectFolder, archives, path } = useContext(MobileContext);
     const navigation = useNavigation();
 
     const { docs, loading } = getFolders(path);
 
-    const onSelectFolder = (folder: IFolder) => {
-        selectFolder(folder);
+    const onSelectFolder = (archive: IArchive) => {
+        selectFolder(archive);
         navigation.navigate('Folder');
     };
 
@@ -58,16 +59,16 @@ export const Home = () => {
                             <ActivityIndicator size="large" />
                         </View>
                     ) : (
-                        _.isEmpty(folders) ? (
+                        _.isEmpty(archives) ? (
                             <EmptyFolder />
                         ) : (
                             <FlatList
-                                data={folders}
+                                data={archives}
                                 renderItem={({ item }) => (
                                     <View style={styles.item}>
                                         <BoxFolder
-                                            onSelectFolder={(folder: IFolder) => onSelectFolder(folder)}
-                                            folder={item}
+                                            onSelectFolder={(archive: IArchive) => onSelectFolder(archive)}
+                                            archive={item}
                                             quantityArchives={2}
                                             key={item.text}
                                         />
