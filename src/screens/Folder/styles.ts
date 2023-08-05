@@ -3,22 +3,23 @@ import { COLORS } from "../../../constants/theme";
 
 export const styles = StyleSheet.create({
     container: {
-        width: '100%',
-        height: '100%',
+        flex: 1
     },
     contentHeader: {
-        width: '100%',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         marginTop: 20,
-        marginHorizontal: 15
+        marginHorizontal: 15,
     },
     contentArrowBack: {
         flexDirection: 'row',
         alignItems: 'center',
         width: '100%',
-        flex: 1
+        marginRight: 40,
+    },
+    viewContentArrow: {
+
     },
     content: {
         width: '100%',

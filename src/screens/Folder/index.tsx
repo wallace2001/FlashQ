@@ -50,12 +50,14 @@ export const Folder = () => {
         <View style={styles.container}>
             {/* <Header /> */}
             <View style={styles.contentHeader}>
-                <TouchableOpacity onPress={onBack} style={styles.contentArrowBack}>
-                    <FontAwesome5 name="arrow-left" size={20} color="black" />
-                    <Text style={{ marginLeft: 10, fontSize: 17 }}>Voltar</Text>
-                </TouchableOpacity>
-                <View style={{ flex: 0.65, justifyContent: 'center', alignItems: 'flex-end' }} >
-                    <Text style={{ fontSize: 20 }}>{stringPath}</Text>
+                <View style={styles.viewContentArrow}>
+                    <TouchableOpacity onPress={onBack} style={styles.contentArrowBack}>
+                        <FontAwesome5 name="arrow-left" size={20} color="black" />
+                        <Text style={{ marginLeft: 10, fontSize: 17 }}>Voltar</Text>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }} >
+                    <Text style={{ fontSize: 20, textAlign: 'center' }}>{stringPath}</Text>
                 </View>
                 <View style={{ flex: 1 }} />
             </View>
