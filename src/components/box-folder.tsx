@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
-import { IFolder } from "../context/context";
+import { IFolder, MobileContext } from "../context/context";
 import { COLORS } from "../../constants/theme";
+import { deleteFolder } from "../actions/folder";
+import useEditFolderModal from "../hooks/use-edit-folder-modal";
 
 interface BoxFoldersProps {
   folder: IFolder;
@@ -17,7 +19,10 @@ export const BoxFolder = ({
   onSelectFolder
 }: BoxFoldersProps) => {
 
+  const { path } = useContext(MobileContext);
+
   const [swipeActivated, setSwipeActivated] = useState(false);
+  const {onOpen: onOpenEditFolder} = useEditFolderModal();
   const { text: name } = folder;
 
   return (
@@ -29,14 +34,14 @@ export const BoxFolder = ({
         <View style={styles.contentAction}>
           <View style={styles.edit}>
             <TouchableOpacity
-              onPress={() => { }}
+              onPress={() => onOpenEditFolder(folder)}
             >
               <FontAwesome5 name="edit" size={20} color={COLORS.white} />
             </TouchableOpacity>
           </View>
           <View style={styles.remove}>
             <TouchableOpacity
-              onPress={() => { }}
+              onPress={() => deleteFolder(folder.id, path)}
             >
               <FontAwesome5 name="trash" size={20} color={COLORS.white} />
             </TouchableOpacity>

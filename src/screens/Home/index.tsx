@@ -10,6 +10,7 @@ import { BoxSelect } from "../../components/box-select";
 import { BoxFolder } from "../../components/box-folder";
 import { useNavigation } from "@react-navigation/native";
 import { getFolders } from "../../actions/folder";
+import { EmptyFolder } from "../../components/empty-folder";
 
 export const Home = () => {
     const [itemSelected, setitemSelected] = useState<string>("archives");
@@ -57,20 +58,24 @@ export const Home = () => {
                             <ActivityIndicator size="large" />
                         </View>
                     ) : (
-                        <FlatList
-                        data={folders}
-                        renderItem={({ item }) => (
-                            <View style={styles.item}>
-                                <BoxFolder
-                                    onSelectFolder={(folder: IFolder) => onSelectFolder(folder)}
-                                    folder={item}
-                                    quantityArchives={2}
-                                    key={item.text}
-                                />
-                            </View>
-                        )}
-                        showsVerticalScrollIndicator={false}
-                    />
+                        _.isEmpty(folders) ? (
+                            <EmptyFolder />
+                        ) : (
+                            <FlatList
+                                data={folders}
+                                renderItem={({ item }) => (
+                                    <View style={styles.item}>
+                                        <BoxFolder
+                                            onSelectFolder={(folder: IFolder) => onSelectFolder(folder)}
+                                            folder={item}
+                                            quantityArchives={2}
+                                            key={item.text}
+                                        />
+                                    </View>
+                                )}
+                                showsVerticalScrollIndicator={false}
+                            />
+                        )
                     )}
                 </View>
             </View>

@@ -20,9 +20,13 @@ interface PropsProvider{
 };
 
 export interface IPars {
+    id: string;
     text: string;
     type: string;
     path: string;
+    quantityArchives: number;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export interface IFolder {

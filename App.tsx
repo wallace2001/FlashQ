@@ -14,6 +14,7 @@ import {
 } from "@expo-google-fonts/poppins";
 import { Router } from "./src/routes";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ModalEditFolder } from "./src/components/modal-edit-folder";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -44,6 +45,7 @@ export default function App() {
         <MobileProivder>
           <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
             <StatusBar style="dark" />
+            <ModalEditFolder />
             <Router colorScheme={colorScheme}/>
           </SafeAreaView>
         </MobileProivder>

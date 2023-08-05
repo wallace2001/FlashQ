@@ -1,4 +1,4 @@
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet } from "react-native";
 import { COLORS } from "../../../constants/theme";
 
 const styles = StyleSheet.create({
@@ -21,44 +21,6 @@ const styles = StyleSheet.create({
     },
     contentButton: {
         flex: 1,
-    },
-    form: {
-        width: '100%',
-        paddingHorizontal: 15,
-        paddingVertical: 40,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    contentTextInput: {
-        width: '100%', 
-        justifyContent: 'flex-start', 
-        alignItems: 'flex-start',
-        marginBottom: 5
-    },
-    contentAddFolderButton: {
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#6a2194',
-        borderRadius: 20,
-        marginTop: 40
-    },
-    textInput: {
-        width: '100%',
-        height: 50,
-        paddingHorizontal: 15,
-        paddingVertical: Platform.OS === 'ios' ? 15 : 0,
-        borderRadius: 5,
-        backgroundColor: COLORS.white,
-        fontSize: 17,
-        shadowColor: '#828282',
-        shadowOffset: {
-            width: 0,
-            height: 10,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
-        elevation: 5,
     },
     buttonCreate: {
         padding: 20,
