@@ -1,6 +1,7 @@
 import { StyleSheet, Platform } from "react-native";
+import { COLORS } from "../../../constants/theme";
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
     content: {
         backgroundColor: '#f7f7f7',
         justifyContent: 'flex-start',
@@ -48,7 +49,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 15,
         paddingVertical: Platform.OS === 'ios' ? 15 : 0,
         borderRadius: 5,
-        backgroundColor: "#fff",
+        backgroundColor: COLORS.white,
         fontSize: 17,
         shadowColor: '#828282',
         shadowOffset: {
@@ -93,3 +94,46 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
+
+const dinamicStyledButton = (type: 'folder' | 'card') => { 
+
+    const defaultStylesCard = {
+        ...styles.buttonCreate,
+        borderTopRightRadius: 20,
+        backgroundColor: COLORS.white
+    };
+    const defaultStylesFolder = {
+        ...styles.buttonCreate,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 0,
+        backgroundColor: COLORS.white
+    };
+    const defaultStylesTextCard = {
+        ...styles.text,
+        color: '#000',
+    };
+    const defaultStylesTextFolder = {
+        ...styles.text,
+        color: '#000',
+    };
+
+    if (type === 'folder') {
+        defaultStylesFolder.backgroundColor = '#3f0072';
+        defaultStylesTextFolder.color = COLORS.white;
+    } else if (type === 'card') {
+        defaultStylesCard.backgroundColor = '#3f0072';
+        defaultStylesTextCard.color = COLORS.white;
+    }
+
+    return {
+        styledCard: defaultStylesCard,
+        styledFolder: defaultStylesFolder,
+        styledTextCard: defaultStylesTextCard,
+        styledTextFolder: defaultStylesTextFolder
+    };
+};
+
+export {
+    styles,
+    dinamicStyledButton
+}

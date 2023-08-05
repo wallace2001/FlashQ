@@ -1,4 +1,5 @@
 import { StyleSheet, Platform } from "react-native";
+import { COLORS } from "../../../constants/theme";
 
 export const homeStyles = StyleSheet.create({
     container: {
@@ -19,7 +20,7 @@ export const homeStyles = StyleSheet.create({
     },
     item: {
         margin: 4,
-        backgroundColor: "#fff",
+        backgroundColor: COLORS.white,
         borderRadius: 10,
         flexBasis: 0,
     },

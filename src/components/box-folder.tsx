@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { Swipeable } from "react-native-gesture-handler";
 import { IFolder } from "../context/context";
+import { COLORS } from "../../constants/theme";
 
 interface BoxFoldersProps {
   folder: IFolder;
@@ -30,14 +31,14 @@ export const BoxFolder = ({
             <TouchableOpacity
               onPress={() => { }}
             >
-              <FontAwesome5 name="edit" size={20} color="#fff" />
+              <FontAwesome5 name="edit" size={20} color={COLORS.white} />
             </TouchableOpacity>
           </View>
           <View style={styles.remove}>
             <TouchableOpacity
               onPress={() => { }}
             >
-              <FontAwesome5 name="trash" size={20} color="#fff" />
+              <FontAwesome5 name="trash" size={20} color={COLORS.white} />
             </TouchableOpacity>
           </View>
         </View>
@@ -54,12 +55,12 @@ export const BoxFolder = ({
         <View style={styles.backgroundImage}>
           <Entypo name="folder" size={40} color="#ffe713" />
         </View>
-        <View style={styles.infoAnimal}>
+        <View style={styles.info}>
           <View style={styles.headerInfo}>
             <Text style={styles.nameText}>{name}</Text>
           </View>
           <View style={styles.contentInfo}>
-            <Text style={styles.yearText}>{quantityArchives} de arquivos</Text>
+            <Text style={styles.quantityArchives}>{quantityArchives} de arquivos</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -69,63 +70,6 @@ export const BoxFolder = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    position: "relative",
-  },
-  backgroundImage: {
-    width: 100,
-    height: '100%',
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  infoAnimal: {
-    width: 250,
-    height: 80,
-    backgroundColor: "#fff",
-    borderTopRightRadius: 20,
-    borderBottomRightRadius: 20,
-  },
-  headerInfo: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-  },
-  nameText: {
-    fontFamily: "Poppins_500Medium",
-    fontSize: 17,
-    color: "#575757",
-  },
-  contentInfo: {
-    paddingHorizontal: 10,
-  },
-  location: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    marginTop: 20,
-  },
-  distanceText: {
-    color: "#717171",
-    fontFamily: "Poppins_500Medium",
-  },
-  breedText: {
-    fontSize: 16,
-    color: "#717171",
-    fontFamily: "Poppins_500Medium",
-  },
-  yearText: {
-    fontSize: 15,
-    color: "#8e8e8e",
-    fontFamily: "Poppins_500Medium",
-    marginTop: 10,
-  },
   contentAction: {
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -149,5 +93,47 @@ const styles = StyleSheet.create({
     backgroundColor: '#ec0a0a',
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10,
+  },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    position: "relative",
+  },
+  backgroundImage: {
+    width: 100,
+    height: '100%',
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  info: {
+    width: 250,
+    height: 80,
+    backgroundColor: COLORS.white,
+    borderTopRightRadius: 20,
+    borderBottomRightRadius: 20,
+  },
+  headerInfo: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+  },
+  nameText: {
+    fontFamily: "Poppins_500Medium",
+    fontSize: 17,
+    color: "#575757",
+  },
+  contentInfo: {
+    paddingHorizontal: 10,
+  },
+  quantityArchives: {
+    fontSize: 15,
+    color: "#8e8e8e",
+    fontFamily: "Poppins_500Medium",
+    marginTop: 10,
   },
 });

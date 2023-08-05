@@ -4,15 +4,14 @@ import React, {
     useState, 
 } from 'react';
 import _ from "lodash";
-import { setDoc, doc, DocumentData } from 'firebase/firestore';
-import { db } from '../config/firebaseConfig';
+import { DocumentData } from 'firebase/firestore';
+import { createFolder } from '../actions/folder';
 
 interface PropsContext{
     folders: IFolder[];
     path: string;
     changeFolders(folders: DocumentData[] | undefined): void;
     selectFolder(folder: IFolder): void;
-    createFolder(pars: IPars): void;
     setPath(value: string): void;
 };
 
@@ -39,17 +38,6 @@ export const MobileContext = createContext({} as PropsContext);
 export const MobileProivder = ({children}: PropsProvider) => {
     const [path, setPath] = useState<string>('FlashQ');
     const [folders, setFolders] = useState<IFolder[]>([]);
-
-    // Create a new folder or subfolder
-    const createFolder = async (pars: IPars) => {
-        try {
-            pars.path = path;
-            const docRef = doc(db, path, pars.text);
-            await setDoc(docRef, pars);
-        } catch (error) {
-            console.log("error: ", error);
-        }
-    };
 
     // List files inside selected folder
     const changeFolders = (docs: DocumentData[] | undefined) => {
@@ -78,7 +66,6 @@ export const MobileProivder = ({children}: PropsProvider) => {
             folders,
             changeFolders,
             selectFolder,
-            createFolder,
             setPath
         }}>
             {children}

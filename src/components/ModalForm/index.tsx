@@ -1,17 +1,19 @@
-import { Text, View, KeyboardAvoidingView, } from "react-native";
+import { Text, View } from "react-native";
 import { useState, useContext } from "react";
 import Modal from "react-native-modal";
 import useAddFolderModal from "../../hooks/use-add-modal";
 import { TextInput, TouchableOpacity } from "react-native-gesture-handler";
-import { styles } from "./styles";
+import { dinamicStyledButton, styles } from "./styles";
 import { IPars, MobileContext } from "../../context/context";
 import { Entypo } from "@expo/vector-icons";
+import { createFolder } from "../../actions/folder";
+import { COLORS } from "../../../constants/theme";
 
 const FormNewFolder = () => {
     const [description, setDescription] = useState<string>('');
     const { onClose } = useAddFolderModal();
 
-    const { createFolder } = useContext(MobileContext);
+    const { path } = useContext(MobileContext);
 
     const handleSubmit = () => {
         const pars: IPars = {
@@ -20,7 +22,7 @@ const FormNewFolder = () => {
             path: ''
         };
 
-        createFolder(pars);
+        createFolder(pars, path);
         onClose();
     };
 
@@ -39,7 +41,7 @@ const FormNewFolder = () => {
             />
             <TouchableOpacity onPress={handleSubmit} style={{ justifyContent: 'center', alignSelf: 'center', width: 200, height: 60 }}>
                 <View style={styles.contentAddFolderButton}>
-                    <Entypo name="plus" size={24} color="#fff" />
+                    <Entypo name="plus" size={24} color={COLORS.white} />
                 </View>
             </TouchableOpacity>
         </View>
@@ -78,41 +80,3 @@ export const ModalAddArchive = () => {
         </Modal >
     );
 }
-
-const dinamicStyledButton = (type: 'folder' | 'card') => {
-
-    const defaultStylesCard = {
-        ...styles.buttonCreate,
-        borderTopRightRadius: 20,
-        backgroundColor: '#fff'
-    };
-    const defaultStylesFolder = {
-        ...styles.buttonCreate,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 0,
-        backgroundColor: '#fff'
-    };
-    const defaultStylesTextCard = {
-        ...styles.text,
-        color: '#000',
-    };
-    const defaultStylesTextFolder = {
-        ...styles.text,
-        color: '#000',
-    };
-
-    if (type === 'folder') {
-        defaultStylesFolder.backgroundColor = '#3f0072';
-        defaultStylesTextFolder.color = '#fff';
-    } else if (type === 'card') {
-        defaultStylesCard.backgroundColor = '#3f0072';
-        defaultStylesTextCard.color = '#fff';
-    }
-
-    return {
-        styledCard: defaultStylesCard,
-        styledFolder: defaultStylesFolder,
-        styledTextCard: defaultStylesTextCard,
-        styledTextFolder: defaultStylesTextFolder
-    };
-};

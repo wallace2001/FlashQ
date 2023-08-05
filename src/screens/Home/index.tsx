@@ -1,17 +1,15 @@
 import { useState, useEffect, useContext } from "react";
 import { View, FlatList, ActivityIndicator } from "react-native";
-import { collection } from "firebase/firestore";
-import { useCollectionData } from "react-firebase-hooks/firestore";
 import _ from "lodash";
 
-import { db } from "../../config/firebaseConfig";
-import { IFolder, IPars, MobileContext } from "../../context/context";
+import { IFolder, MobileContext } from "../../context/context";
 import { homeStyles as styles } from "./styles";
 import { Header } from "../../components/Header";
 import { OPTIONS_BREED } from "../../../constants/home";
 import { BoxSelect } from "../../components/box-select";
 import { BoxFolder } from "../../components/box-folder";
 import { useNavigation } from "@react-navigation/native";
+import { getFolders } from "../../actions/folder";
 
 export const Home = () => {
     const [itemSelected, setitemSelected] = useState<string>("archives");
@@ -19,8 +17,7 @@ export const Home = () => {
     const { changeFolders, selectFolder, folders, path } = useContext(MobileContext);
     const navigation = useNavigation();
 
-    const query = collection(db, path);
-    const [docs, loading] = useCollectionData(query);
+    const { docs, loading } = getFolders(path);
 
     const onSelectFolder = (folder: IFolder) => {
         selectFolder(folder);

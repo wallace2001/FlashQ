@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import React from "react";
+import { COLORS } from "../../constants/theme";
 
 interface BoxSelectProps {
   item: {
@@ -40,7 +41,7 @@ export const BoxSelect = ({
             shadowColor: "#20244247",
             backgroundColor: "#6a2194",
           } :
-          { backgroundColor: blocked ? "#cacaca" : "#fff" },
+          { backgroundColor: blocked ? "#cacaca" : COLORS.white },
         ]}
       >
         {isThisSelected ? imageSelected : image}
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 90,
     borderRadius: 10,
-    backgroundColor: "#fff",
+    backgroundColor: COLORS.white,
     shadowColor: "#a8a8a84e",
     shadowOpacity: 1,
     shadowOffset: { width: 2, height: 10 },

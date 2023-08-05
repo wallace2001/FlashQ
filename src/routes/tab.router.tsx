@@ -1,25 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { COLORS } from '../../constants/theme';
 import { Home } from '../screens/Home';
-import { Entypo, Feather, MaterialIcons } from '@expo/vector-icons';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Entypo, Feather } from '@expo/vector-icons';
 import ModalScreen from '../components/modal-add-archive';
 import NotFoundScreen from '../screens/not-found-screen';
 import { RootStackParamList } from '../types';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Folder } from '../screens/Folder';
-import { MobileContext } from '../context/context';
 import _ from "lodash";
-import { AuthRouter } from './authRouter';
 
 const CustomTabBarButton = () => (null)
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
+const TabBar = createBottomTabNavigator();
 
-export const RootNavigator = () => {
-
+const RootNavigator = () => {
     return (
         <Stack.Navigator initialRouteName='Home'
             screenOptions={{
@@ -42,8 +39,6 @@ export const RootNavigator = () => {
     );
 }
 
-const TabBar = createBottomTabNavigator();
-
 export const CustomTabBar = () => {
     return (
         <View style={styles.container}>
@@ -56,7 +51,7 @@ export const CustomTabBar = () => {
                         bottom: 0,
                         left: 20,
                         right: 20,
-                        backgroundColor: '#fff',
+                        backgroundColor: COLORS.white,
                         borderRadius: 15,
                         height: 70,
                         ...styles.shadow,
@@ -100,7 +95,7 @@ export const CustomTabBar = () => {
                             <Entypo
                                 name="plus"
                                 size={size}
-                                color='#fff'
+                                color={COLORS.white}
                             />
                         )),
                         tabBarButton: (props) => (
