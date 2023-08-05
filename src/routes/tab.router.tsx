@@ -12,12 +12,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Folder } from '../screens/Folder';
 import { MobileContext } from '../context/context';
 import _ from "lodash";
+import { AuthRouter } from './authRouter';
 
 const CustomTabBarButton = () => (null)
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootNavigator = () => {
+
     return (
         <Stack.Navigator initialRouteName='Home'
             screenOptions={{

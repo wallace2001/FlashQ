@@ -2,15 +2,16 @@ const COLORS = {
     pink_500: '#FA4FFE',
     blue_100: '#454A72',
     blue_input: '#242846',
-    blue_background: '#202442',
-    white: '#fff'
+    blue_background: '#EAE8FE',
+    white: '#fff',
+    black: '#000'
 };
 
 const FONTS = {
     h1: {
         fontFamily: 'Ubuntu_700Bold',
         fontSize: 35,
-        color: COLORS.white,
+        color: COLORS.black,
     },
     text: {
         color: COLORS.blue_100,

@@ -18,9 +18,17 @@ export const styles = StyleSheet.create({
         paddingVertical: 15,
         marginTop: 30,
         borderRadius: 20,
-        backgroundColor: COLORS.blue_input,
+        backgroundColor: COLORS.white,
         paddingHorizontal: 15,
-        color: COLORS.white
+        color: COLORS.white,
+        shadowColor: '#828282',
+        shadowOffset: {
+            width: 0,
+            height: 10,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5,
     },
     contentForgot: {
         flexDirection: 'row',

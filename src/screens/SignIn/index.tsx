@@ -95,9 +95,9 @@ export const SignIn = () => {
                     <View style={styles.line} />
                 </View>
                 <View style={styles.contentSocials}>
-                    <FontAwesome5 name="facebook" size={30} color="white" />
-                    <Entypo name="google--with-circle" size={30} color="white" />
-                    <Entypo name="twitter-with-circle" size={30} color="white" />
+                    <FontAwesome5 name="facebook" size={30} color={COLORS.blue_input} />
+                    <Entypo name="google--with-circle" size={30} color={COLORS.blue_input} />
+                    <Entypo name="twitter-with-circle" size={30} color={COLORS.blue_input} />
                 </View>
             </View>
 

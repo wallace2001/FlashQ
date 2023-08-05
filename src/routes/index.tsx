@@ -9,12 +9,14 @@ import { CustomTabBar, RootNavigator } from './tab.router';
 
 export const Router = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
 
+    const user = false;
+
     return (
         <NavigationContainer
             linking={LinkingConfiguration}
             theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-            <CustomTabBar />
+            {user ? <CustomTabBar /> : <AuthRouter />}
         </NavigationContainer>
     );
 }
