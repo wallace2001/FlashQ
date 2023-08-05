@@ -9,14 +9,14 @@ export const FolderIcon = ({ folder }: { folder: IFolder }) => {
 
     return (
         <TouchableOpacity onPress={() => selectFolder(folder)} style={styles.container}>
-        <View style={styles.folder}>
-            <Entypo name="folder" size={40} color="black" />
-        </View>
-        <View style={styles.contentName}>
-            <Text style={styles.text}>{folder.text}</Text>
-        </View>
-        <View style={{ flex: 1 }} />
-    </TouchableOpacity>
+            <View style={styles.folder}>
+                <Entypo name="folder" size={40} color="black" />
+            </View>
+            <View style={styles.contentName}>
+                <Text style={styles.text}>{folder.text}</Text>
+            </View>
+            <View style={{ flex: 1 }} />
+        </TouchableOpacity>
     );
 };
 
