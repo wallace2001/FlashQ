@@ -1,14 +1,20 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {AppRouter} from './appRouter';
+import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import { AppRouter } from './appRouter';
 import { AuthRouter } from './authRouter';
 import _ from "lodash";
+import LinkingConfiguration from './linking-configuration';
+import { ColorSchemeName } from 'react-native';
+import { CustomTabBar, RootNavigator } from './tab.router';
 
-export const Router = () => {
+export const Router = ({ colorScheme }: { colorScheme: ColorSchemeName }) => {
 
     return (
-        <NavigationContainer>
-            <AuthRouter />
+        <NavigationContainer
+            linking={LinkingConfiguration}
+            theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+        >
+            <CustomTabBar />
         </NavigationContainer>
     );
 }

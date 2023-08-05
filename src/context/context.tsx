@@ -13,6 +13,7 @@ interface PropsContext{
     changeFolders(folders: DocumentData[] | undefined): void;
     selectFolder(folder: IFolder): void;
     createFolder(pars: IPars): void;
+    setPath(value: string): void;
 };
 
 interface PropsProvider{
@@ -27,9 +28,10 @@ export interface IPars {
 
 export interface IFolder {
     id: string;
-    path: string;
+    path?: string;
     text: string;
-    type: string;
+    type?: string;
+    empty?: boolean;
 }
 
 export const MobileContext = createContext({} as PropsContext);
@@ -64,7 +66,10 @@ export const MobileProivder = ({children}: PropsProvider) => {
 
     // Enter a folder
     const selectFolder = async (folder: IFolder) => {
-        setPath(folder.path.concat(`/${folder.text}/children`));
+        if (folder.path) {
+            const newPath = folder?.path.concat(`/${folder.text}/children`);
+            setPath(newPath);
+        }
     };
 
     return (
@@ -73,7 +78,8 @@ export const MobileProivder = ({children}: PropsProvider) => {
             folders,
             changeFolders,
             selectFolder,
-            createFolder
+            createFolder,
+            setPath
         }}>
             {children}
         </MobileContext.Provider>
