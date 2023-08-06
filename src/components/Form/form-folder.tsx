@@ -37,12 +37,13 @@ export const FormFolder = ({
         <View style={styles.form}>
             {!folder?.id && (
                 <View style={styles.contentTextInput} >
-                    <Text style={{ fontSize: 15, marginLeft: 5 }} >Nome da Pasta</Text>
+                    <Text style={{ fontSize: 15, marginLeft: 5, marginBottom: 5 }} >Nome da Pasta</Text>
                 </View>
             )}
             <TextInput
                 value={description}
                 placeholder="Nome da Pasta"
+                placeholderTextColor='#8f8f8f'
                 onChangeText={setDescription}
                 autoCorrect={false}
                 autoCapitalize="none"

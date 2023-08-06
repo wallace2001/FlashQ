@@ -2,8 +2,9 @@ import { doc, setDoc } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import { Toast } from "react-native-toast-message/lib/src/Toast";
 import { IArchive } from "../../types";
+import { NavigationProp } from "@react-navigation/native";
 
-export const createCard = async (pars: IArchive, path: string) => {
+export const createCard = async (pars: IArchive, path: string, navigation: NavigationProp<ReactNavigation.RootParamList>) => {
     try {
         if (path === 'FlashQ') {
             Toast.show({
@@ -20,6 +21,8 @@ export const createCard = async (pars: IArchive, path: string) => {
             type: 'success',
             text1: 'Card criado com sucesso.',
         });
+
+        navigation.goBack();
     } catch (error) {
         console.log("error: ", error);
     }

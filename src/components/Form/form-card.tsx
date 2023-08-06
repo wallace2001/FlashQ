@@ -6,10 +6,11 @@ import { v4 as uuid } from "uuid";
 import { COLORS } from "../../../constants/theme";
 import * as ImagePicker from 'expo-image-picker';
 import _ from "lodash";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, FontAwesome5 } from "@expo/vector-icons";
 import { createCard } from "../../actions/card";
 import { MobileContext } from "../../context/context";
 import useAddModal from "../../hooks/use-add-modal";
+import { useNavigation } from "@react-navigation/native";
 
 interface IImage {
     front: string;
@@ -26,12 +27,14 @@ interface IValuesForm {
 export const FormCard = () => {
 
     const { path } = useContext(MobileContext);
-    const { onClose } = useAddModal();
+    const navigation = useNavigation();
 
     const [images, setImages] = useState<IImage>({
         front: '',
         back: ''
     });
+    const [title, setTitle] = useState<string>('');
+    const [response, setResponse] = useState<string>('');
     const [sideCard, setSideCard] = useState<'front' | 'back'>('front');
 
     const { control, handleSubmit, formState: { errors }, getValues, setValue, } = useForm<IValuesForm>({
@@ -54,9 +57,7 @@ export const FormCard = () => {
             text: data.text,
             frontImage: data.images.front,
             backImage: data.images.back,
-        }, path);
-
-        onClose();
+        }, path, navigation);
     };
 
     const pickImage = async (type: 'front' | 'back') => {
@@ -79,9 +80,21 @@ export const FormCard = () => {
         setValue('images', newImages);
     };
 
+    const onBack = () => {
+        navigation.goBack();
+    };
+
     return (
         <View style={styles.form}>
+            <View style={styles.viewContentArrow}>
+                <TouchableOpacity onPress={onBack} style={styles.contentArrowBack}>
+                    <FontAwesome5 name="arrow-left" size={20} color="black" />
+                    <Text style={{ marginLeft: 10, fontSize: 17 }}>Voltar</Text>
+                </TouchableOpacity>
+            </View>
+            <Text style={{ fontSize: 20 }} >Criar Card</Text>
             <ScrollView>
+                <Text style={styles.textInput}>Nome do Card</Text>
                 <Controller
                     control={control}
                     rules={{
@@ -100,6 +113,7 @@ export const FormCard = () => {
                     name="text"
                 />
                 {errors.text && <Text style={{ color: '#bd0505', fontSize: 16, marginTop: 5 }} >This is required.</Text>}
+                <Text style={styles.textInput}>Pergunta</Text>
                 <Controller
                     control={control}
                     rules={{
@@ -109,15 +123,19 @@ export const FormCard = () => {
                         <TextInput
                             style={styles.input}
                             onBlur={onBlur}
-                            onChangeText={onChange}
+                            onChangeText={(e) => {
+                                onChange(e);
+                                setTitle(e);
+                            }}
                             value={value}
                             placeholderTextColor="#b4b4b4"
-                            placeholder="Titulo do Card"
+                            placeholder="Qual a pergunta do card ?"
                         />
                     )}
                     name="title"
                 />
                 {errors.title && <Text style={{ color: '#bd0505', fontSize: 16, marginTop: 5 }} >This is required.</Text>}
+                <Text style={styles.textInput}>Resposta</Text>
                 <Controller
                     control={control}
                     rules={{
@@ -127,10 +145,13 @@ export const FormCard = () => {
                         <TextInput
                             style={styles.input}
                             onBlur={onBlur}
-                            onChangeText={onChange}
+                            onChangeText={(e) => {
+                                onChange(e);
+                                setResponse(e);
+                            }}
                             value={value}
                             placeholderTextColor="#b4b4b4"
-                            placeholder="Resposta"
+                            placeholder="Qual a resposta do card ?"
                         />
                     )}
                     name="response"
@@ -198,7 +219,7 @@ export const FormCard = () => {
                                         />
                                     </View>
                                 )}
-                                <Text>{sideCard === 'front' ? getValues('title') : getValues('response')}</Text>
+                                <Text>{sideCard === 'front' ? title : response}</Text>
                             </View>
                         </Pressable>
                     </View>
@@ -213,17 +234,31 @@ export const FormCard = () => {
 
 const styles = StyleSheet.create({
     form: {
-        width: '100%',
-        height: 400,
+        flex: 1,
         paddingHorizontal: 15,
         paddingVertical: 30,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 70
+    },
+    viewContentArrow: {
+        width: '100%',
+    },
+    contentArrowBack: {
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+        flexDirection: 'row'
+    },
+    textInput: {
+        fontSize: 15,
+        marginBottom: 5,
+        color: '#7a7a7a',
+        marginLeft: 5
     },
     input: {
         width: '100%',
         paddingVertical: 15,
-        marginTop: 20,
+        marginBottom: 30,
         borderRadius: 10,
         backgroundColor: COLORS.white,
         paddingHorizontal: 15,
@@ -283,12 +318,10 @@ const styles = StyleSheet.create({
     card: {
         width: '100%',
         height: 200,
-        borderWidth: 1,
-        borderColor: '#2f0480',
-        borderStyle: 'dashed',
         borderRadius: 10,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: COLORS.white
     },
     buttonCreate: {
         width: '100%',

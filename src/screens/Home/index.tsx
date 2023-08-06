@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import { getFolders } from "../../actions/folder";
 import { EmptyFolder } from "../../components/empty-folder";
 import { IArchive } from "../../types";
+import { ModalAddArchive } from "../../components/ModalForm";
 
 export const Home = () => {
     const [itemSelected, setitemSelected] = useState<string>("archives");

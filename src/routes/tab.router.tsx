@@ -10,6 +10,7 @@ import { RootStackParamList } from '../types';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Folder } from '../screens/Folder';
 import _ from "lodash";
+import { FormCard } from '../components/Form';
 
 const CustomTabBarButton = () => (null)
 
@@ -25,7 +26,6 @@ const RootNavigator = () => {
                 },
             }}
         >
-            {/* <Stack.Screen name="Root" component={CustomDrawer} options={{ headerShown: false }} /> */}
             <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
             <Stack.Screen
                 name='Home'
@@ -34,6 +34,10 @@ const RootNavigator = () => {
                     headerShown: false,
                 }}
             />
+            <Stack.Group screenOptions={{ presentation: 'modal' }}>
+                <Stack.Screen name='ModalFormCard' component={FormCard} options={{ headerShown: false }} />
+            </Stack.Group>
+            <Stack.Screen name='FormCard' component={FormCard} options={{ headerShown: false }} />
             <Stack.Screen options={{ headerShown: false, gestureEnabled: false, }} name="Folder" component={Folder} />
         </Stack.Navigator>
     );

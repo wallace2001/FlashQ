@@ -1,12 +1,17 @@
+import { useContext } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { View, Image, Text, StyleSheet } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { COLORS } from "../../constants/theme";
-import useAddModal from "../hooks/use-add-modal";
+import { MobileContext } from "../context/context";
+import useAddFolderModal from "../hooks/use-add-folder-modal";
+import { useNavigation } from "@react-navigation/native";
 
 export const EmptyFolder = () => {
 
-    const { onOpen } = useAddModal();
+    const navigation = useNavigation();
+    const { path } = useContext(MobileContext);
+    const { onOpen } = useAddFolderModal();
 
     return (
         <View style={styles.contentEmpty}>
@@ -20,6 +25,10 @@ export const EmptyFolder = () => {
             </View>
             <View style={styles.contentButtonNewArchive}>
                 <TouchableOpacity style={styles.button} onPress={onOpen}>
+                    <Entypo name="plus" size={30} color={COLORS.white} />
+                    <Text style={{ color: COLORS.white, fontSize: 18, marginRight: 10, marginLeft: 10 }}>Criar nova pasta</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={[styles.button, {marginTop: 20}]} onPress={() => navigation.navigate('ModalFormCard')}>
                     <Entypo name="plus" size={30} color={COLORS.white} />
                     <Text style={{ color: COLORS.white, fontSize: 18, marginRight: 10, marginLeft: 10 }}>Criar novo arquivo</Text>
                 </TouchableOpacity>

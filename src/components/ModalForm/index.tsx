@@ -1,55 +1,53 @@
+import { useContext } from "react";
 import { Text, View } from "react-native";
-import { useState, useContext } from "react";
 import Modal from "react-native-modal";
-import useAddFolderModal from "../../hooks/use-add-modal";
+import useAddCardModal from "../../hooks/use-add-modal";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { dinamicStyledButton, styles } from "./styles";
-import { FormFolder, FormCard } from "../Form";
-import { IPars, MobileContext } from "../../context/context";
-import { createFolder } from "../../actions/folder";
+import { styles } from "./styles";
+import useAddFolderModal from "../../hooks/use-add-folder-modal";
+import { ModalAddFolder } from "../modal-add-folder";
+import { MobileContext } from "../../context/context";
 
-export const ModalAddArchive = () => {
+interface IModalAddArchive {
+    onPressCard(): void;
+};
 
-    const [type, setType] = useState<'folder' | 'card'>('folder');
+export const ModalAddArchive = ({
+    onPressCard
+}: IModalAddArchive) => {
+
     const { path } = useContext(MobileContext);
-    const { isOpen, onClose } = useAddFolderModal();
-
-    const handleSubmit = (pars: IPars) => {
-        createFolder(pars, path);
-        onClose();
-    };
-
+    const { isOpen, onClose } = useAddCardModal();
+    const { onOpen } = useAddFolderModal();
     return (
         <Modal
             backdropOpacity={0.2}
             isVisible={isOpen}
             onBackdropPress={onClose}
             style={styles.contentView}
-            avoidKeyboard
+            animationInTiming={1}
+            animationOutTiming={1}
             propagateSwipe={true}
         >
             <View style={styles.content}>
                 <View style={styles.contentButtons}>
                     <View style={styles.contentButton}>
-                        <TouchableOpacity onPress={() => setType('folder')} style={dinamicStyledButton(type).styledFolder}>
-                            <Text style={dinamicStyledButton(type).styledTextFolder}>Nova Pasta</Text>
+                        <TouchableOpacity onPress={onOpen} style={styles.buttonCreate}>
+                            <Text style={styles.text}>Nova Pasta</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={styles.contentButton}>
-                        <TouchableOpacity onPress={() => setType('card')} style={dinamicStyledButton(type).styledCard}>
-                            <Text style={dinamicStyledButton(type).styledTextCard}>Novo Card</Text>
+                        <TouchableOpacity 
+                            disabled={path === 'FlashQ'} 
+                            onPress={onPressCard} 
+                            style={[styles.buttonCreate, { backgroundColor: path === 'FlashQ' ? '#969696' : '#fff' }]}
+                        >
+                            <Text style={styles.text}>Novo Card</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
-                {type === 'folder' ? (
-                    <FormFolder
-                        onSubmit={(pars: IPars) => handleSubmit(pars)}
-                    />
-                ) : (
-                    <FormCard />
-                )}
-
             </View>
+            <ModalAddFolder />
         </Modal >
     );
 }
