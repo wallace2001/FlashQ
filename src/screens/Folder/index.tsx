@@ -1,28 +1,27 @@
 import { useContext, useEffect, useState } from "react";
-import { View, Text, ActivityIndicator, Image } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import { IFolder, MobileContext } from "../../context/context";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { BoxFolder } from "../../components/box-folder";
-import { Entypo, FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import _ from "lodash";
-import useAddFolderModal from "../../hooks/use-add-modal";
 import { styles } from "./styles";
 import { getFolders } from "../../actions/folder";
-import { COLORS } from "../../../constants/theme";
+import { EmptyFolder } from "../../components/empty-folder";
+import { IArchive } from "../../types";
 
 export const Folder = () => {
     const [stringPath, setStringPath] = useState<string>('');
 
-    const { folders, selectFolder, changeFolders, setPath, path } = useContext(MobileContext);
+    const { archives, selectFolder, changeFolders, setPath, path } = useContext(MobileContext);
 
-    const { onOpen } = useAddFolderModal();
     const navigation = useNavigation();
 
     const { docs, loading } = getFolders(path);
 
-    const onSelectFolder = (folder: IFolder) => {
-        selectFolder(folder);
+    const onSelectFolder = (archive: IArchive) => {
+        selectFolder(archive);
     };
 
     const onBack = () => {
@@ -72,31 +71,14 @@ export const Folder = () => {
                         <ActivityIndicator size="large" />
                     </View>
                 ) : (
-                    _.isEmpty(folders) ? (
-                        <View style={styles.contentEmpty}>
-                            <View style={styles.contentEmptyFolder}>
-                                <Image
-                                    source={require('../../../assets/emptyFolder.png')}
-                                    resizeMode="cover"
-                                    style={styles.image}
-                                />
-                                <Text style={{ fontSize: 20, marginLeft: 10 }}>Pasta vazia</Text>
-                            </View>
-                            <View style={styles.contentButtonNewArchive}>
-                                <TouchableOpacity style={styles.button} onPress={onOpen}>
-                                    <Entypo name="plus" size={30} color={COLORS.white} />
-                                    <Text style={{ color: COLORS.white, fontSize: 18, marginRight: 10, marginLeft: 10 }}>Criar novo arquivo</Text>
-                                </TouchableOpacity>
-                            </View>
-                        </View>
-                    ) : (
+                    _.isEmpty(archives) ? (<EmptyFolder />) : (
                         <FlatList
-                            data={folders}
+                            data={archives}
                             renderItem={({ item }) => (
                                 <View style={styles.item}>
                                     <BoxFolder
-                                        onSelectFolder={(folder) => onSelectFolder(folder)}
-                                        folder={item}
+                                        onSelectFolder={(archive) => onSelectFolder(archive)}
+                                        archive={item}
                                         quantityArchives={2}
                                         key={item.text}
                                     />

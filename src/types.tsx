@@ -16,8 +16,9 @@ declare global {
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Folder: undefined;
+  FormCard: undefined;
   Home: undefined;
-  ModalAddFolder: undefined;
+  ModalFormCard: undefined;
   NotFound: undefined;
 };
 
@@ -35,3 +36,14 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> = Composit
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export interface IArchive {
+  id: string;
+  title?: string;
+  text: string;
+  response?: string;
+  path?: string;
+  type: string;
+  frontImage?: string;
+  backImage?: string;
+};

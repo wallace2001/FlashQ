@@ -3,11 +3,14 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import useAddFolderModal from "../hooks/use-add-modal";
 import { ModalAddArchive } from "./ModalForm";
 import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
+import { useNavigation } from "@react-navigation/native";
 
 interface ModalScreenProps extends BottomTabBarButtonProps {};
 
 export default function ModalScreen({ children }: ModalScreenProps) {
-  const { onOpen } = useAddFolderModal();
+
+  const { onOpen, onClose } = useAddFolderModal();
+  const navigation = useNavigation();
 
   return (
     <>
@@ -29,7 +32,12 @@ export default function ModalScreen({ children }: ModalScreenProps) {
           {children}
         </View>
       </TouchableOpacity>
-      <ModalAddArchive />
+      <ModalAddArchive 
+        onPressCard={() => {
+          onClose();
+          navigation.navigate('FormCard');
+        }}
+      />
     </>
   );
 }

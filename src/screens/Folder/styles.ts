@@ -33,30 +33,4 @@ export const styles = StyleSheet.create({
         marginHorizontal: 12,
         marginVertical: 4
     },
-    contentEmptyFolder: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row'
-    },
-    image: {
-        width: 40,
-        height: 40
-    },
-    contentEmpty: {
-        width: '100%',
-        height: '100%',
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    contentButtonNewArchive: {
-        marginTop: 20,
-    },
-    button: {
-        padding: 10,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row',
-        backgroundColor: '#3f0072'
-    },
 });

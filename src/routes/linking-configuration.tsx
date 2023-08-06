@@ -21,6 +21,7 @@ const linking: LinkingOptions<RootStackParamList> = {
           },
         },
       },
+      ModalFormCard: 'modalFormCard',
       NotFound: '*',
     },
   },

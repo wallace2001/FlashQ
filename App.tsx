@@ -14,6 +14,11 @@ import {
 } from "@expo-google-fonts/poppins";
 import { Router } from "./src/routes";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ModalEditFolder } from "./src/components/modal-edit-folder";
+import { Toast } from "react-native-toast-message/lib/src/Toast";
+import { ModalViewFile } from "./src/components/modal-view-file";
+import { ModalAddArchive } from "./src/components/ModalForm";
+import { ModalAddFolder } from "./src/components/modal-add-folder";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,12 +46,16 @@ export default function App() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-        <MobileProivder>
-          <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
-            <StatusBar style="dark" />
-            <Router colorScheme={colorScheme}/>
-          </SafeAreaView>
-        </MobileProivder>
+      <MobileProivder>
+        <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
+          <StatusBar style="dark" />
+          <ModalEditFolder />
+          <ModalViewFile />
+          <ModalAddFolder />
+          <Router colorScheme={colorScheme} />
+          <Toast />
+        </SafeAreaView>
+      </MobileProivder>
     </GestureHandlerRootView>
   );
 }

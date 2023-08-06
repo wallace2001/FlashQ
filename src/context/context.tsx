@@ -6,12 +6,13 @@ import React, {
 import _ from "lodash";
 import { DocumentData } from 'firebase/firestore';
 import { createFolder } from '../actions/folder';
+import { IArchive } from '../types';
 
 interface PropsContext{
-    folders: IFolder[];
+    archives: IArchive[];
     path: string;
-    changeFolders(folders: DocumentData[] | undefined): void;
-    selectFolder(folder: IFolder): void;
+    changeFolders(archives: DocumentData[] | undefined): void;
+    selectFolder(archive: IArchive): void;
     setPath(value: string): void;
 };
 
@@ -20,9 +21,13 @@ interface PropsProvider{
 };
 
 export interface IPars {
+    id: string;
     text: string;
     type: string;
     path: string;
+    quantityArchives: number;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 export interface IFolder {
@@ -37,25 +42,29 @@ export const MobileContext = createContext({} as PropsContext);
 
 export const MobileProivder = ({children}: PropsProvider) => {
     const [path, setPath] = useState<string>('FlashQ');
-    const [folders, setFolders] = useState<IFolder[]>([]);
+    const [archives, setArchives] = useState<IArchive[]>([]);
 
     // List files inside selected folder
     const changeFolders = (docs: DocumentData[] | undefined) => {
-        const foldersMapped: IFolder[] = _.map(docs, (doc: DocumentData) => {
+        const foldersMapped: IArchive[] = _.map(docs, (doc: DocumentData) => {
             return {
                 id: doc.id,
                 path: doc.path,
                 text: doc.text,
-                type: doc.type
-            } as IFolder;
+                type: doc.type,
+                backImage: doc.backImage,
+                frontImage: doc.frontImage,
+                response: doc.response,
+                title: doc.title
+            } as IArchive;
         });
-        setFolders(foldersMapped);
+        setArchives(foldersMapped);
     }
 
     // Enter a folder
-    const selectFolder = async (folder: IFolder) => {
-        if (folder.path) {
-            const newPath = folder?.path.concat(`/${folder.text}/children`);
+    const selectFolder = async (archive: IArchive) => {
+        if (archive.path) {
+            const newPath = archive?.path.concat(`/${archive.text}/children`);
             setPath(newPath);
         }
     };
@@ -63,7 +72,7 @@ export const MobileProivder = ({children}: PropsProvider) => {
     return (
         <MobileContext.Provider value={{
             path,
-            folders,
+            archives,
             changeFolders,
             selectFolder,
             setPath
